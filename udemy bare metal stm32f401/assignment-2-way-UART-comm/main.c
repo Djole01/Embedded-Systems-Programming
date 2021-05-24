@@ -53,7 +53,10 @@ char USART2_read(void)
 {
 	if(USART2->SR & 0x0020){			// if char arrived
 		return USART2->DR;
-	}	
+	}
+	else {
+		return 0;
+	}
 }
 
 // blinks n amount of times based on char entered
@@ -88,10 +91,8 @@ void USART_write(int ch)
 
 void push_button(void)
 {
-		if(GPIOC->IDR & 0x2000)	// if PC13 is high
+		if(!(GPIOC->IDR & 0x2000))	// if PC13 is high
 		{
-		}
-		else{
 			USART_write('H');
 			USART_write('i');
 			delayMs(1000);
